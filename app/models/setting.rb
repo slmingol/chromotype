@@ -121,6 +121,10 @@ ActiveRecord::Base.with_advisory_lock("chromotype-setting") do
     )
     end
 
+    def self.thumbnail_dimension
+      {large: resizes[-3], medium: resizes[-2], small: resizes[-1]}
+    end
+
     # iPhoto uses 640x480 and 360x270 (?)
 
     # Do you want to store "Firstname Lastname",

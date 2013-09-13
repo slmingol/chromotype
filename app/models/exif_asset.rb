@@ -35,4 +35,10 @@ class ExifAsset < Asset
     previews_path_for_captured_at + "#{canonical_name}_#{width}x#{height}.#{suffix}"
   end
 
+  # @abstract Returns path to thumbnail
+  # @param [Symbol] :size -- requested thumbnail size, options: :large, :medium, :small
+  def thumbnail(size)
+    cache_path_for_size(*Setting.thumbnail_dimension[size].split('x'))
+  end
+
 end

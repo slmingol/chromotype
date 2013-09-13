@@ -1,0 +1,71 @@
+// Place all the styles related to the Assets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'bootstrap/_variables';
+@import 'font-awesome';
+
+// Dark Theme, largely negatives of native Bootstrap colors
+$bodyBackground: $black;
+$textColor:      $grayLighter;
+
+$linkColor: #08c !default;
+$linkColorHover:        lighten($linkColor, 15%) !default;
+
+$dropdownLinkColor:             $grayLight !default;
+$dropdownLinkColorHover:        $black !default;
+$dropdownLinkColorActive:       $black !default;
+
+$placeholderText:         $grayDark !default;
+$hrBorder:                $grayDarker !default;
+
+$navbarLinkColor:                 #D1D1D1 !default;
+$navbarLinkColorHover:            $grayLight !default;
+$navbarLinkColorActive:           $gray !default;
+
+$navbarInverseText:                      $grayDark !default;
+$navbarInverseLinkColor:                 $grayDark !default;
+$navbarInverseLinkColorHover:            $black !default;
+$navbarInverseSearchPlaceholderColor:    #444 !default;
+
+$tooltipColor:            #000 !default;
+$tooltipBackground:       #fff !default;
+
+$popoverBackground:       #000 !default;
+$popoverArrowColor:       #000 !default;
+$popoverTitleBackground:  lighten($popoverBackground, 3%) !default;
+
+$popoverArrowOuterColor:  rgba(255,255,255,.25) !default;
+
+@import 'bootstrap';
+
+// Full height
+body {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+}
+html {
+  height: 100%;
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+}
+.full {
+  height: 100%;
+  width: 100%;
+}
+
+// Horizontal centering
+.carousel-inner {
+
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  .item > img {
+    display: inline-block;
+  }
+}
