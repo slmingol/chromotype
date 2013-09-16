@@ -1,5 +1,3 @@
-require 'exiftoolr'
-
 # Assumes the mixin consumer has a "pathname" method
 module ExifMixin
   extend CacheSupport
@@ -8,7 +6,7 @@ module ExifMixin
     Chromotype::SHORT_TTL_CACHE
   end
 
-  # Returns hash of filename => Exiftoolr::Results for
+  # Returns hash of filename => Exiftool::Results for
   # all the files that have valid EXIF headers. Results
   # may be from cache.
   def self.exif_results(*filenames)
@@ -17,7 +15,7 @@ module ExifMixin
     filenames.each { |ea| results[ea] = cache.read(cache_key(ea)) }
     results.delete_if { |k, v| v.nil? || v.errors? }
     missing = filenames - results.keys
-    e = Exiftoolr.new(missing)
+    e = Exiftool.new(missing)
     unless e.errors?
       missing.each do |ea|
         result = e.result_for(ea)
@@ -31,7 +29,7 @@ module ExifMixin
   def self.exif_result(filename)
     f = filename.to_s
     cache.fetch(cache_key(f)) do
-      e = Exiftoolr.new(f)
+      e = Exiftool.new(f)
       e.result_for(f) unless e.errors?
     end
   end
