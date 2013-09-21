@@ -12,6 +12,7 @@ script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate test
 
 before_script:
-  - sudo apt-get install libimage-exiftool-perl graphicsmagick
+#  - sudo apt-get install libimage-exiftool-perl graphicsmagick
+  - sudo apt-get install graphicsmagick
 #  - mysql -e 'create database chromotype_test'
   - psql -c 'create database chromotype_test' -U postgres

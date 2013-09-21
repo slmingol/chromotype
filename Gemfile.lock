@@ -62,7 +62,7 @@ GEM
     execjs (2.0.1)
     exiftool (0.3.0)
       json
-    exiftool_vendored (9.33.1)
+    exiftool_vendored (9.37.0)
       exiftool (>= 0.3.0)
     ffi (1.9.0)
     findler (0.0.7)
