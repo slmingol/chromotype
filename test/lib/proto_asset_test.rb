@@ -6,6 +6,8 @@ describe ProtoAsset do
   end
 
   it '#urns works' do
+    touchtime = Time.at(1329984295).strftime('%Y%m%d%H%M.%S')
+    `touch -t #{touchtime} #{img_path('IMG_2452.jpg')}`
     @pa.urns.must_equal_hash(
       URN::FsAttrs => 'urn:fs-attrs:1329984295:2940995',
       URN::Sha1 => 'urn:sha1:026f5bac679f5373cd8503ca43586314d851eebb',
