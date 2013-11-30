@@ -1,23 +1,11 @@
 module URN
-  class Exif
-    extend CacheSupport
-
+  class Exif < ExifBase
     def self.urn_prefix
       'urn:exif:'
     end
 
-    def self.urn_for_pathname(pathname)
-      cached_with_short_ttl(pathname) {
-        a = urn_array(pathname)
-        (urn_prefix + a.join(';')) if a
-      }
-    end
-
-    def self.urn_array(pathname)
-      exif_result = ExifMixin.exif_result(pathname)
-      if exif_result && !exif_result.errors? && exif_result.raw_hash[:create_date]
-        # These fields seem to be durable even when edited:
-        # Can't use :serial_number or :image_number because Preview.app deletes that tag.
+    def self.urn_array_from_exif(exif_result)
+      if exif_result.raw_hash[:create_date]
         [
           exif_result.raw_hash[:create_date],
           exif_result[:f_number].to_s,
