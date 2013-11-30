@@ -75,7 +75,7 @@ gem 'druthers'
 
 group :development do
 # TODO: seemed cool:  gem "rails-erd"
-  gem 'debugger'
+#  gem 'debugger'
 end
 
 group :test do

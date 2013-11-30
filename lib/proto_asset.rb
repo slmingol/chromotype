@@ -4,7 +4,7 @@ class ProtoAsset
 
   # "URNers" take a URL and extract a URN
   # which can be used to match the asset with a duplicate file.
-  DEFAULT_URNERS = [URN::FsAttrs, URN::Sha1, URN::Exif] # in order of expense
+  DEFAULT_URNERS = [URN::FsAttrs, URN::Sha1, URN::Exif, URN::ExifSerial] # in order of expense
 
   # "Visitors" are sent #visit_asset when assets are imported.
   DEFAULT_VISITORS = [CameraTag, DateTag, DirTag, FaceTag, GeoTag, SeasonTag, ImageResizer]

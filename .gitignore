@@ -19,3 +19,4 @@
 /rdoc
 .DS_Store
 /.yardoc
+/.ruby-version

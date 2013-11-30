@@ -3,7 +3,7 @@ module URN
     extend CacheSupport
 
     def self.urn_prefix
-      "urn:sha1:"
+      'urn:sha1:'
     end
 
     def self.urn_for_pathname(pathname)

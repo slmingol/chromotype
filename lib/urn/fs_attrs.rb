@@ -3,7 +3,7 @@ module URN
     extend CacheSupport
 
     def self.urn_prefix
-      "urn:fs-attrs:"
+      'urn:fs-attrs:'
     end
 
     def self.urn_for_pathname(pathname)
