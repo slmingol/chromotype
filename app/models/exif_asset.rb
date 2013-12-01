@@ -10,7 +10,12 @@ class ExifAsset < Asset
   end
 
   def captured_at
-    exif[:date_time_original] || exif[:create_date] || super
+    exif[:date_time_original_civil] || exif[:create_date_civil] || super
+  end
+
+  def captured_at_ymd
+    d = captured_at
+    (d.year * 10000) + (d.month * 100) + (d.day)
   end
 
   def sha1
@@ -24,8 +29,7 @@ class ExifAsset < Asset
   end
 
   def canonical_name
-    timestamp = captured_at.strftime("%Y%m%d")
-    "#{timestamp}-#{short_sha1}"
+    "#{captured_at_ymd}-#{short_sha1}"
   end
 
   def previews_path_for_captured_at
@@ -33,7 +37,8 @@ class ExifAsset < Asset
   end
 
   def ymd_dirs
-    captured_at.strftime("%Y/%m/%d")
+    d = captured_at
+    sprintf '%04d/%02d/%02d', d.year, d.month, d.day
   end
 
   def cache_path_for_size(width, height, suffix = 'jpg')

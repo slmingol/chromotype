@@ -9,7 +9,7 @@ class DateTag < Tag
   end
 
   def self.visit_asset(asset)
-    date = asset.captured_at.to_date
+    date = asset.captured_at
     asset.add_tag(for_date(date), self)
   end
 end

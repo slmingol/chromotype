@@ -58,11 +58,10 @@ gem 'rb-fchange', :require => false
 
 #gem 'haml-rails'
 gem 'parallel' # just for Parallel.processor_count
-#gem 'ruby-geonames', :git => 'git://github.com/mceachen/ruby-geonames.git'
 gem 'geonames'
-#gem 'geonames_api', :git => 'git@github.com:mceachen/geonames_api.git'
-gem 'findler' #, :git => 'git://github.com/mceachen/findler.git'
-gem 'closure_tree' #, :git => 'git://github.com/mceachen/closure_tree.git'
+gem 'findler'
+gem 'closure_tree'
+gem 'exiftool'
 gem 'exiftool_vendored'
 gem 'micro_magick'
 gem 'dimensions'
