@@ -4,25 +4,30 @@ class AssetUrl < ActiveRecord::Base
 
   validates_associated :asset
   validates_presence_of :url
-  validates :asset, :presence => true
   validate :immutable_url
   before_create :normalize_url_and_sha
   after_save :update_asset_basename
 
-  def self.with_url(url)
-    where(url: url.to_uri.to_s)
-  end
-
-  def self.with_any_url(urls)
-    where(url: urls.map { |ea| ea.to_uri.to_s })
+  # Note that the returned asset_url will not have an asset if the entity was created.
+  def self.find_or_create_by_filename(filename)
+    with_filename(filename).first_or_create
   end
 
   def self.with_filename(filename)
-    where(url: filename.to_pathname.to_uri.to_s)
+    with_url(filename.to_pathname)
+  end
+
+  def self.with_url(uri)
+    str = uri.to_uri.to_s
+    where(url: str, url_sha: str.sha1)
+  end
+
+  def self.with_any_url(urls)
+    where(url_sha: urls.map { |ea| ea.to_uri.to_s.sha1 })
   end
 
   def self.with_any_filename(filenames)
-    where(url: filenames.map { |ea| ea.to_pathname.to_uri.to_s })
+    with_any_url(filenames.map(&:to_pathname))
   end
 
   # returns a Pathname instance. Will be nil unless the uri's scheme is "file"
@@ -51,12 +56,12 @@ class AssetUrl < ActiveRecord::Base
 
   def immutable_url
     if !new_record? && changed_attributes.include?(:url)
-      errors.add(:url, "immutable")
+      errors.add(:url, 'immutable')
     end
   end
 
   def update_asset_basename
-    if asset.basename.nil?
+    if asset && asset.basename.nil?
       asset.update_attribute(:basename, basename)
     end
   end

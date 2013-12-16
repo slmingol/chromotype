@@ -15,4 +15,8 @@ class Date
   def month_name
     I18n.t("date.month_names")[self.month]
   end
+
+  def ymd
+    year * 10000 + month * 100 + day
+  end
 end

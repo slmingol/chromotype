@@ -58,11 +58,12 @@ gem 'rb-fchange', :require => false
 
 #gem 'haml-rails'
 gem 'parallel' # just for Parallel.processor_count
-gem 'geonames'
+gem 'geonames_api', :github => 'buytruckload/geonames_api'
 gem 'findler'
 gem 'closure_tree'
 gem 'exiftool'
 gem 'exiftool_vendored'
+gem 'monogamy'
 gem 'micro_magick'
 gem 'dimensions'
 gem 'attr_memoizer'

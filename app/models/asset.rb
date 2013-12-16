@@ -62,15 +62,21 @@ class Asset < ActiveRecord::Base
   end
 
   def captured_at
-    pathname.ctime
+    attributes[:captured_at] || pathname.ctime
+  end
+
+  def self.create_with_pathname(pathname)
+    pathname = pathname.to_pathname
+    create(:basename => pathname.basename.to_s).
+      tap { |ea| ea.add_pathname(pathname) }
   end
 
   def add_pathname(pathname)
-    asset_urls.with_url(pathname.to_pathname.to_uri).first_or_create
+    add_url(pathname.to_pathname.to_uri)
   end
 
   def add_url(url)
-    asset_urls.with_url(url).first_or_create
+    asset_urls.with_url(url).first_or_create!
   end
 
   def delete!
@@ -140,6 +146,11 @@ class Asset < ActiveRecord::Base
 
   def move_to_trash
     pathname.mv_to_trash
+  end
+
+  def ymd_dirs
+    d = captured_at
+    sprintf '%04d/%02d/%02d', d.year, d.month, d.day
   end
 
   def mv_to(basedir)

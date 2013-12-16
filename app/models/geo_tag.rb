@@ -1,10 +1,10 @@
-require 'geonames'
+require 'geonames_api'
 
 class GeoTag < Tag
   extend CacheSupport # only used in class methods
 
   def self.root_name
-    "where"
+    'where'
   end
 
   def self.visit_asset(exif_asset)
@@ -15,16 +15,16 @@ class GeoTag < Tag
     end
   end
 
-  def self.tag_for_lat_lon(lat, lon)
-    return nil if lat.nil? || lon.nil?
-    place_path = cached_with_long_ttl("%.6f:%.6f" % [lat, lon]) do
+  def self.tag_for_lat_lon(lat, lng)
+    return nil if lat.nil? || lng.nil?
+    place_path = cached_with_long_ttl("%.6f:%.6f" % [lat, lng]) do
       if Setting.geonames_username
-        Geonames.config.username = Setting.geonames_username
+        GeonamesAPI.username = Setting.geonames_username
       end
-      places_nearby = Geonames::WebService.find_nearby_place_name(lat, lon) || []
+      places_nearby = GeoNamesAPI::Place.find(lat: lat, lng: lng) || []
       nearest = places_nearby.first
       return nil if nearest.nil? || nearest.geoname_id.to_i == 0
-      places = Geonames::WebService.hierarchy(nearest.geoname_id)
+      places = GeoNamesAPI::Hierarchy.find(geonameId: nearest.geoname_id)
       places.collect { |ea| ea.name }
     end
     named_root.find_or_create_by_path(place_path)

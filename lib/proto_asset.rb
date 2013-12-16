@@ -35,7 +35,7 @@ class ProtoAsset
   end
 
   def pathname
-    paths.try(:last)
+    @pathname ||= paths.try(:last)
   end
 
   def paths
@@ -66,38 +66,42 @@ class ProtoAsset
     # Shouldn't happen, because of the findler filters set up in the NextFileProcessor
     return if pathname.nil?
 
-    # TODO: what if there are > 1?
-    asset = Asset.with_filename(pathname.to_s).first
+    asset_url = AssetUrl.find_or_create_by_filename(pathname)
+    puts "using asset_url #{asset_url.id} for #{pathname}"
+    asset_url.with_lock do
+      asset = asset_url.asset
 
-    # Short-circuit if the urn and pathname match.
-    # This assumes that the first URN changes if the contents for a pathname change.
-    if asset
-      current_first_urn = @urners.first.urn_for_pathname(pathname)
-      unless asset.asset_urns.find_by_urn(current_first_urn).nil?
-        @asset_state = :old
-        return asset
+      # Short-circuit if the urn and pathname match.
+      # This assumes that the first URN changes if the contents for a pathname change.
+      if asset
+        current_first_urn = @urners.first.urn_for_pathname(pathname)
+        unless asset.asset_urns.find_by_urn(current_first_urn).nil?
+          @asset_state = :old
+          return asset
+        end
       end
-    end
 
-    # Find the first asset that matches a URN (they're in order of expense of URN generation)
-    @urners.each do |urner|
-      urn = urner.urn_for_pathname(pathname)
-      assets = Asset.with_urn(urn)
-      Rails.logger.warn("multiple assets match #{urn}") if assets.size > 1
-      asset = assets.first
-      break if asset
-    end
+      # Find the first asset that matches a URN (they're in order of expense of URN generation)
+      @urners.each do |urner|
+        urn = urner.urn_for_pathname(pathname)
+        asset = Asset.with_urn(urn).first
+        if asset
+          puts "Found asset:#{asset.id} from urn:#{urn} (#{urner})"
+          break
+        end
+      end
 
-    @asset_state = asset.nil? ? :new : :adopted
+      @asset_state = asset.nil? ? :new : :adopted
 
-    asset ||= ExifAsset.create(:basename => pathname.basename.to_s)
-    asset_url = asset.add_pathname(pathname)
-    asset_url.asset_urns.delete_all # Prior URNs lose.
-    @urners.each do |urner|
-      urn = urner.urn_for_pathname(pathname)
-      asset_url.asset_urns.where(urn: urn).first_or_create
+      asset ||= ExifAsset.create!(:basename => pathname.basename.to_s)
+      asset.asset_urls << asset_url
+      asset_url.asset_urns.delete_all # Prior URNs lose.
+      @urners.each do |urner|
+        urn = urner.urn_for_pathname(pathname)
+        asset_url.asset_urns.where(urn: urn).first_or_create! if urn
+      end
+      asset
     end
-    asset
   end
 end
 
