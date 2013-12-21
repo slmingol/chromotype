@@ -67,7 +67,6 @@ class ProtoAsset
     return if pathname.nil?
 
     asset_url = AssetUrl.find_or_create_by_filename(pathname)
-    puts "using asset_url #{asset_url.id} for #{pathname}"
     asset_url.with_lock do
       asset = asset_url.asset
 
@@ -85,10 +84,7 @@ class ProtoAsset
       @urners.each do |urner|
         urn = urner.urn_for_pathname(pathname)
         asset = Asset.with_urn(urn).first
-        if asset
-          puts "Found asset:#{asset.id} from urn:#{urn} (#{urner})"
-          break
-        end
+        break if asset
       end
 
       @asset_state = asset.nil? ? :new : :adopted
