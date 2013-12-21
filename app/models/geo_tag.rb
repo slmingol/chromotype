@@ -19,7 +19,7 @@ class GeoTag < Tag
     return nil if lat.nil? || lng.nil?
     place_path = cached_with_long_ttl("%.6f:%.6f" % [lat, lng]) do
       if Setting.geonames_username
-        GeonamesAPI.username = Setting.geonames_username
+        GeoNamesAPI.username = Setting.geonames_username
       end
       places_nearby = GeoNamesAPI::Place.find(lat: lat, lng: lng) || []
       nearest = places_nearby.first
