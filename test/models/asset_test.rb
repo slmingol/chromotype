@@ -1,7 +1,7 @@
 require 'test_helper'
 
 describe Asset do
-  before :each do
+  before do
     @asset = Asset.create!
     @path = 'Gemfile'.to_pathname.realpath
     @asset.add_pathname @path
@@ -58,6 +58,31 @@ describe Asset do
     a = Asset.create!
     new_pathname = a.add_pathname Pathname.new("Gemfile")
     new_pathname.must_be_nil
+  end
+
+  describe 'tags' do
+    before do
+      @assets = 3.times.collect { Asset.create! }
+      @tag0 = Tag.create!(name: 'test')
+      @tag3 = Tag.find_or_create_by_path %w{parent child grandchild}
+      @tag2 = @tag3.parent
+      @tag1 = @tag2.parent
+      @assets.first.add_tag(@tag1)
+      @assets.second.add_tag(@tag2)
+      @assets.third.add_tag(@tag3)
+    end
+
+    it 'finds assets by tag' do
+      Asset.with_tag(@tag1).must_equal [@assets.first]
+      Asset.with_tag(@tag2).must_equal [@assets.second]
+      Asset.with_tag(@tag3).must_equal [@assets.third]
+    end
+
+    it 'finds descendant associations' do
+      Asset.with_tag_or_descendants(@tag1).must_equal(@assets)
+      Asset.with_tag_or_descendants(@tag2).must_equal(@assets.last(2))
+      Asset.with_tag_or_descendants(@tag3).must_equal(@assets.last(1))
+    end
   end
 end
 

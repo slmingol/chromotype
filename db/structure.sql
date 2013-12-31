@@ -36,7 +36,9 @@ SET default_with_oids = false;
 CREATE TABLE asset_tags (
     asset_id integer,
     tag_id integer,
-    visitor character varying(255)
+    visitor character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 
 
@@ -325,10 +327,24 @@ CREATE INDEX asset_urn_idx ON asset_urns USING btree (urn);
 
 
 --
+-- Name: index_asset_tags_on_asset_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_asset_tags_on_asset_id ON asset_tags USING btree (asset_id);
+
+
+--
+-- Name: index_asset_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_asset_tags_on_tag_id ON asset_tags USING btree (tag_id);
+
+
+--
 -- Name: index_asset_tags_on_tag_id_and_asset_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_asset_tags_on_tag_id_and_asset_id ON asset_tags USING btree (tag_id, asset_id);
+CREATE UNIQUE INDEX index_asset_tags_on_tag_id_and_asset_id ON asset_tags USING btree (tag_id, asset_id);
 
 
 --
@@ -360,17 +376,50 @@ CREATE UNIQUE INDEX index_tags_on_name_and_parent_id ON tags USING btree (name, 
 
 
 --
--- Name: index_tags_on_type_and_name_and_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_tags_on_type_and_name_and_parent_id ON tags USING btree (type, name, parent_id);
-
-
---
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: asset_urls_asset_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY asset_urls
+    ADD CONSTRAINT asset_urls_asset_id_fk FOREIGN KEY (asset_id) REFERENCES assets(id);
+
+
+--
+-- Name: asset_urns_asset_url_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY asset_urns
+    ADD CONSTRAINT asset_urns_asset_url_id_fk FOREIGN KEY (asset_url_id) REFERENCES asset_urls(id);
+
+
+--
+-- Name: tag_hierarchies_ancestor_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tag_hierarchies
+    ADD CONSTRAINT tag_hierarchies_ancestor_id_fk FOREIGN KEY (ancestor_id) REFERENCES tags(id);
+
+
+--
+-- Name: tag_hierarchies_descendant_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tag_hierarchies
+    ADD CONSTRAINT tag_hierarchies_descendant_id_fk FOREIGN KEY (descendant_id) REFERENCES tags(id);
+
+
+--
+-- Name: tags_parent_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_parent_id_fk FOREIGN KEY (parent_id) REFERENCES tags(id);
 
 
 --

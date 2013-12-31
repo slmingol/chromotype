@@ -7,6 +7,9 @@ class CreateAssetUrls < ActiveRecord::Migration
       t.string :url_sha, :limit => 40, :required => true
       t.timestamps
     end
+
+    add_foreign_key(:asset_urls, :assets)
+
     # MySQL can only have 760 chars in an index, so let's index the url by sha.
     add_index :asset_urls, [:url_sha], :name => 'asset_url_sha_udx', :unique => true
   end

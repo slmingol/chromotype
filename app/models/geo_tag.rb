@@ -10,9 +10,8 @@ class GeoTag < Tag
   def self.visit_asset(exif_asset)
     # todo: short-circuit if we already have geo tags
     e = exif_asset.exif
-    if tag = tag_for_lat_lon(e[:gps_latitude], e[:gps_longitude])
-      exif_asset.add_tag(tag, self)
-    end
+    tag = tag_for_lat_lon(e[:gps_latitude], e[:gps_longitude])
+    exif_asset.add_tag(tag, self) if tag
   end
 
   def self.tag_for_lat_lon(lat, lng)
@@ -21,11 +20,12 @@ class GeoTag < Tag
       if Setting.geonames_username
         GeoNamesAPI.username = Setting.geonames_username
       end
-      places_nearby = GeoNamesAPI::Place.find(lat: lat, lng: lng) || []
-      nearest = places_nearby.first
-      return nil if nearest.nil? || nearest.geoname_id.to_i == 0
-      places = GeoNamesAPI::Hierarchy.find(geonameId: nearest.geoname_id)
-      places.collect { |ea| ea.name }
+      places_nearby = GeoNamesAPI::Place.find(lat: lat, lng: lng)
+      nearest_geo_id = places_nearby.try(:first).try(:geoname_id)
+      if nearest_geo_id
+        places = GeoNamesAPI::Hierarchy.find(geonameId: nearest_geo_id)
+        places.map(&:name)
+      end
     end
     named_root.find_or_create_by_path(place_path)
   end

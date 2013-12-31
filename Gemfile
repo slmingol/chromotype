@@ -7,6 +7,7 @@ gem 'rails', '~> 4.0.0'
 
 gem 'nokogiri'
 gem 'pg'
+gem 'foreigner'
 
 gem 'randumb' #, :git => 'git://github.com/spilliton/randumb.git'
 gem 'json'
