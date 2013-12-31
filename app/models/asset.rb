@@ -106,10 +106,8 @@ class Asset < ActiveRecord::Base
 
   def add_tag(tag, visitor = nil)
     asset_tag = asset_tags.where(tag: tag).first_or_initialize
-    if visitor
-      asset_tag.visitor = visitor.to_s
-      asset_tag.save
-    end
+    asset_tag.visitor = visitor.to_s if visitor
+    asset_tag.save
     asset_tag
   end
 

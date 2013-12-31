@@ -73,9 +73,9 @@ describe Asset do
     end
 
     it 'finds assets by tag' do
-      Asset.with_tag(@tag1).must_equal [@assets.first]
-      Asset.with_tag(@tag2).must_equal [@assets.second]
-      Asset.with_tag(@tag3).must_equal [@assets.third]
+      Asset.with_tag(@tag1).to_a.must_equal [@assets.first]
+      Asset.with_tag(@tag2).to_a.must_equal [@assets.second]
+      Asset.with_tag(@tag3).to_a.must_equal [@assets.third]
     end
 
     it 'finds descendant associations' do
