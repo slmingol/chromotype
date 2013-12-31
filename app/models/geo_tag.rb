@@ -10,7 +10,10 @@ class GeoTag < Tag
   def self.visit_asset(exif_asset)
     # todo: short-circuit if we already have geo tags
     e = exif_asset.exif
-    tag = tag_for_lat_lon(e[:gps_latitude], e[:gps_longitude])
+    lat = e[:gps_latitude]
+    lng = e[:gps_longitude]
+    puts "(lat, lng) for #{exif_asset.basename} is (#{lat.inspect}, #{lng.inspect})"
+    tag = tag_for_lat_lon(lat, lng)
     exif_asset.add_tag(tag, self) if tag
   end
 

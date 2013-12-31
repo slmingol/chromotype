@@ -24,12 +24,22 @@ describe "asset processing without image resizing" do
     pa.asset_state.must_equal :old
   end
 
-  it "should process JPG assets with EXIF headers" do
+  it "should process DSLR assets with EXIF headers" do
     asset = @ap.perform(img_path("Canon 20D.jpg"))
     asset_must_include_all_tags(asset,
       "when/2004/9/19" => "DateTag",
       "when/seasons/autumn" => "SeasonTag",
       "with/Canon/EOS 20D" => "CameraTag",
+      "file" + (Rails.root + "test/images").to_s => "DirTag"
+    )
+  end
+
+  it "should process DroidX assets with EXIF headers" do
+    asset = @ap.perform(img_path("Droid X.jpg"))
+    asset_must_include_all_tags(asset,
+      "when/2010/12/8" => "DateTag",
+      "when/seasons/winter" => "SeasonTag",
+      "with/Motorola/DROIDX" => "CameraTag",
       "file" + (Rails.root + "test/images").to_s => "DirTag"
     )
   end
@@ -40,13 +50,12 @@ describe "asset processing without image resizing" do
       "when/2011/11/23" => "DateTag",
       "when/seasons/autumn" => "SeasonTag",
       "with/Apple/iPhone 4S" => "CameraTag",
-      "file" + (Rails.root + "test/images").to_s => "DirTag"
+      "file" + (Rails.root + "test/images").to_s => "DirTag",
+      "where/Earth/North America/United States/California/San Mateo County/El Granada" => "GeoTag"
     }
-    unless ENV['TRAVIS']
-      expected["where/Earth/North America/United States/California/San Mateo County/El Granada"] = "GeoTag"
-    end
     asset_must_include_all_tags(asset, expected)
   end
+
 
   it "should extract face tags from picasa" do
     asset = @ap.perform(img_path("faces.jpg"))
