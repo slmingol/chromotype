@@ -7,12 +7,11 @@ env:
 #  - DB=sqlite
 #  - DB=mysql
   - DB=postgresql
-  - GEONAMES_USER=chromotype_ci
 
 before_script:
   - sudo apt-get install graphicsmagick
 #  - mysql -e 'create database chromotype_test'
-  - psql -c 'create database chromotype_test' -U postgres
+#  - psql -c 'create database chromotype_test' -U postgres
 
 script:
-  - RAILS_ENV=test bundle exec rake --trace db:migrate test
+  - GEONAMES_USER=chromotype_ci RAILS_ENV=test bundle exec rake --trace db:reset test
