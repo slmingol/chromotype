@@ -55,7 +55,7 @@ ActiveRecord::Base.with_advisory_lock("chromotype-setting") do
     end
 
     def self.geonames_username
-      get_druther(:geonames_username) || ("chromotype_ci" if ENV['CI'] || Rails.env.test?)
+      get_druther(:geonames_username) || ENV['GEONAMES_USER']
     end
 
     # For thumbnails and screen-sized versions:
