@@ -105,10 +105,12 @@ class Asset < ActiveRecord::Base
   end
 
   def add_tag(tag, visitor = nil)
-    asset_tags.where(tag: tag).first_or_initialize.tap do |t|
-      t.visitor = visitor || t.visitor
-      t.save
+    asset_tag = asset_tags.where(tag: tag).first_or_initialize
+    if visitor
+      asset_tag.visitor = visitor.to_s
+      asset_tag.save
     end
+    asset_tag
   end
 
   def urn_siblings_in_library
