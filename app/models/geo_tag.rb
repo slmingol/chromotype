@@ -21,10 +21,12 @@ class GeoTag < Tag
         GeoNamesAPI.username = Setting.geonames_username
       end
       places_nearby = GeoNamesAPI::Place.find(lat: lat, lng: lng)
-      nearest_geo_id = places_nearby.try(:first).try(:geoname_id)
-      if nearest_geo_id
-        places = GeoNamesAPI::Hierarchy.find(geonameId: nearest_geo_id)
-        places.map(&:name)
+      if places_nearby
+        nearest_geo_id = places_nearby.first.try(:geoname_id)
+        if nearest_geo_id
+          places = GeoNamesAPI::Hierarchy.find(geonameId: nearest_geo_id)
+          places.map(&:name)
+        end
       end
     end
     named_root.find_or_create_by_path(place_path)
