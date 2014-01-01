@@ -56,7 +56,6 @@ describe "asset processing without image resizing" do
     asset_must_include_all_tags(asset, expected)
   end
 
-
   it "should extract face tags from picasa" do
     asset = @ap.perform(img_path("faces.jpg"))
     asset_must_include_all_tags(asset,

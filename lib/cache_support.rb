@@ -13,6 +13,6 @@ module CacheSupport
   end
 
   def cache_key(key)
-    "#{class_name}:#{key}"
+    "#{class_name}-#{key}"
   end
 end

@@ -21,14 +21,9 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |ea| require ea }
 DatabaseCleaner.strategy = :transaction
 class MiniTest::Spec
   before :each do
-    @cache_dir = Dir.mktmpdir.to_pathname
-    def Setting.cache_dir
-      @cache_dir
-    end
     DatabaseCleaner.start
   end
   after :each do
-    FileUtils.remove_entry_secure @cache_dir.to_s
     DatabaseCleaner.clean
   end
 end

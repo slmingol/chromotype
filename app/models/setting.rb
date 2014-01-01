@@ -32,7 +32,8 @@ ActiveRecord::Base.with_advisory_lock("chromotype-setting") do
     end
 
     def self.library_root
-      get_druther(:library_root).to_pathname.ensure_directory
+      root = ENV['CHROMOTYPE_HOME'] || get_druther(:library_root)
+      root.to_pathname.ensure_directory
     end
 
     def self.cache_root

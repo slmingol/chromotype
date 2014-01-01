@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/buytruckload/geonames_api.git
-  revision: a7ce355fcf6d4a493b1e6a102dd95d47642b1d30
+  remote: git://github.com/mceachen/geonames_api.git
+  revision: 9bf51a338a8a6d7d99ef4a67452e919248edef77
   specs:
     geonames_api (0.1.1)
       activesupport
