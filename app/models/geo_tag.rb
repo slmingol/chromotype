@@ -15,10 +15,14 @@ class GeoTag < Tag
       exif_asset.lng ||= lng
       exif_asset.save
     end
-    GeoLookup.new(lat, lng).paths.each do |ea|
-      tag = named_root.find_or_create_by_path(ea)
-      exif_asset.add_tag(tag, self)
-    end
+    begin
+      GeoLookup.new(lat, lng).paths.each do |ea|
+        tag = named_root.find_or_create_by_path(ea)
+        exif_asset.add_tag(tag, self)
+      end
+    rescue GeoNamesAPI::LimitExceeded
+      @last_fail = Time.now
+    end if @last_fail.nil? || @last_fail > 10.minutes.ago
   end
 end
 

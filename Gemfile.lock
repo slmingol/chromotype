@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/mceachen/geonames_api.git
+  revision: 2f0b410b917da03a8809597dc9436a1e03fef58a
+  specs:
+    geonames_api (0.1.2)
+      activesupport
+      rubyzip
+      tzinfo
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -71,10 +80,6 @@ GEM
       dotenv (>= 0.7)
       thor (>= 0.13.6)
     formatador (0.2.4)
-    geonames_api (0.1.2)
-      activesupport
-      rubyzip
-      tzinfo
     guard (2.2.5)
       formatador (>= 0.2.4)
       listen (~> 2.1)
@@ -227,7 +232,7 @@ DEPENDENCIES
   font-awesome-rails
   foreigner
   foreman
-  geonames_api
+  geonames_api!
   guard
   jbuilder
   jquery-rails
