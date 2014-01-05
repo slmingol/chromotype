@@ -175,7 +175,7 @@ ActiveRecord::Base.with_advisory_lock("chromotype-setting") do
     # Used for seasons tagging. This is expensive, so we only do it once
     # and save it, rather than just setting a default.
     if get_druther(:is_northern_hemisphere).nil?
-      set_druther(:is_northern_hemisphere, IpLocation.northern_hemisphere? || true)
+      set_druther(:is_northern_hemisphere, !!ENV['CI'] || IpLocation.northern_hemisphere? || true)
     end
 
     # How much parallelism do we allow for sidekiq? Should not exceed number of CPUs.
