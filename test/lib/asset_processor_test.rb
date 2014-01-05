@@ -54,6 +54,8 @@ describe "asset processing without image resizing" do
       "where/US/California/San Mateo County/Half Moon Bay/Deer Creek" => "GeoTag"
     }
     asset_must_include_all_tags(asset, expected)
+    asset.lat.must_be_close_to 37.502
+    asset.lng.must_be_close_to -122.476
   end
 
   it "should extract face tags from picasa" do

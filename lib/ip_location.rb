@@ -2,6 +2,8 @@ require 'nokogiri'
 require 'open-uri'
 
 class IpLocation
+  extend CacheSupport
+
   # Yeah, I'm going to geek hell for the xpaths, but it's just to be nice to the user, so it's OK.
   def self.latitude_maxmind
     doc = Nokogiri::HTML(open('http://www.maxmind.com/app/locate_my_ip'))
