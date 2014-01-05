@@ -9,8 +9,8 @@ describe AssetUrl do
 
   it "should find by filename" do
     a = Asset.create!
-    au1 = a.asset_urls.create!(:url => "file:///a/b/c")
-    au2 = a.asset_urls.create!(:url => "file:///d/e/f")
+    au1 = a.add_pathname("/a/b/c")
+    au2 = a.add_pathname("/d/e/f")
     AssetUrl.with_filename("/a/b/c").to_a.must_equal([au1])
     AssetUrl.with_filename("/d/e/f").to_a.must_equal([au2])
     AssetUrl.with_any_filename(["/d/e/f", "/g/h/i"]).to_a.must_equal([au2])

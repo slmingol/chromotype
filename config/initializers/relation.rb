@@ -1,10 +1,10 @@
 module ActiveRecord
   class Relation
-    def first_or_create(attributes = nil, &block)
+    def safe_first_or_create(attributes = nil, &block)
       first || within_transaction { create_or_first(false, attributes, &block) }
     end
 
-    def first_or_create!(attributes = nil, &block)
+    def safe_first_or_create!(attributes = nil, &block)
       first || within_transaction { create_or_first(true, attributes, &block) }
     end
 
@@ -24,7 +24,8 @@ module ActiveRecord
         record
       rescue ActiveRecordError => e
         @klass.connection.rollback_to_savepoint
-        e.is_a?(RecordNotUnique) ? first : raise
+        # Raise if it's not a RecordNotUnique or first is empty.
+        e.is_a?(RecordNotUnique) ? first || raise : raise
       end
     end
   end

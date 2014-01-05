@@ -65,7 +65,6 @@ gem 'findler'
 gem 'closure_tree'
 gem 'exiftool'
 gem 'exiftool_vendored'
-gem 'monogamy'
 gem 'micro_magick'
 gem 'dimensions'
 gem 'attr_memoizer'
@@ -76,13 +75,13 @@ gem 'foreman'
 gem 'druthers'
 
 group :development do
+  gem 'spring'
 # TODO: seemed cool:  gem "rails-erd"
 #  gem 'debugger'
 end
 
 group :test do
-  gem 'minitest', '>= 0.9'
-  gem 'minitest-rails'
+  gem 'minitest'
   gem 'minitest-reporters'
   gem 'minitest-great_expectations'
   gem 'miniskirt'

@@ -76,7 +76,7 @@ class Asset < ActiveRecord::Base
   end
 
   def add_url(url)
-    asset_urls.with_url(url).first_or_create!
+    asset_urls.with_url(url).safe_first_or_create!
   end
 
   def delete!

@@ -3,7 +3,7 @@ module ExifMixin
   extend CacheSupport
 
   def self.cache
-    Chromotype::SHORT_TTL_CACHE
+    short_ttl_cache
   end
 
   # Returns hash of filename => Exiftool::Results for

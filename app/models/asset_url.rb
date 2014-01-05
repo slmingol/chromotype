@@ -10,7 +10,7 @@ class AssetUrl < ActiveRecord::Base
 
   # Note that the returned asset_url will not have an asset if the entity was created.
   def self.find_or_create_by_filename(filename)
-    with_filename(filename).first_or_create
+    with_filename(filename).safe_first_or_create!
   end
 
   def self.with_filename(filename)

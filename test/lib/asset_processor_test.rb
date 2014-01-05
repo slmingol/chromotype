@@ -74,7 +74,6 @@ describe "asset processing without image resizing" do
   it "finds the same prior-imported assets" do
     img = img_path("iPhone 4S.jpg")
     with_tmp_dir do |dir|
-      Setting.library_root = dir + "library"
       FileUtils.mkdir "imgs"
       FileUtils.cp img, img1 = "imgs/tmp1.jpg"
       FileUtils.cp img, img2 = "imgs/tmp2.jpg"
@@ -95,7 +94,6 @@ describe "asset processing without image resizing" do
     img1 = img_path("IMG_2452.jpg")
     img2 = img_path("IMG_2452_picasa.jpg")
     with_tmp_dir do |dir|
-      Setting.library_root = dir
       a1 = @ap.perform(img1)
       urns1 = a1.asset_urns.collect { |ea| ea.urn }
       a2 = @ap.perform(img2)
@@ -127,11 +125,7 @@ end
 describe "asset processing with image resizing" do
   it "creates resized image assets" do
     with_tmp_dir do |dir|
-      Setting.library_root = dir
       thumbnail_root = Setting.thumbnail_root.to_s
-      # Make sure the thumbnail root is where we think it should be:
-      thumbnail_root.must_match /^#{dir.to_s}/
-
       widths, heights = [], []
       Setting.resizes.each do |ea|
         w, h = ea.split("x").to_i

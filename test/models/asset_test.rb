@@ -3,7 +3,7 @@ require 'test_helper'
 describe Asset do
   before do
     @asset = Asset.create!
-    @path = 'Gemfile'.to_pathname.realpath
+    @path = Rails.root + 'Gemfile'
     @asset.add_pathname @path
     @url = @path.to_uri.to_s
   end
@@ -56,8 +56,8 @@ describe Asset do
 
   it 'fails to give the same URI to another asset' do
     a = Asset.create!
-    new_pathname = a.add_pathname Pathname.new("Gemfile")
-    new_pathname.must_be_nil
+    proc { a.add_pathname @path }.must_raise ActiveRecord::RecordNotUnique
+    a.reload.asset_urls.must_be_empty
   end
 
   describe 'tags' do
@@ -85,4 +85,3 @@ describe Asset do
     end
   end
 end
-
