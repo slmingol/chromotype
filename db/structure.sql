@@ -119,6 +119,8 @@ CREATE TABLE assets (
     description character varying(255),
     taken_at timestamp without time zone,
     lost_at timestamp without time zone,
+    lat double precision,
+    lng double precision,
     visited_by_version integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone

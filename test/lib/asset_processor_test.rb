@@ -51,7 +51,7 @@ describe "asset processing without image resizing" do
       "when/seasons/autumn" => "SeasonTag",
       "with/Apple/iPhone 4S" => "CameraTag",
       "file" + (Rails.root + "test/images").to_s => "DirTag",
-      "where/Earth/North America/United States/California/San Mateo County/El Granada" => "GeoTag"
+      "where/US/California/San Mateo County/Half Moon Bay/Deer Creek" => "GeoTag"
     }
     asset_must_include_all_tags(asset, expected)
   end

@@ -59,7 +59,8 @@ gem 'rb-fchange', :require => false
 
 #gem 'haml-rails'
 gem 'parallel' # just for Parallel.processor_count
-gem 'geonames_api', :github => 'mceachen/geonames_api'
+gem 'geonames_api' #, :path => '../geonames_api' # :github => 'mceachen/geonames_api'
+gem 'nominatim'
 gem 'findler'
 gem 'closure_tree'
 gem 'exiftool'
@@ -80,7 +81,7 @@ group :development do
 end
 
 group :test do
-  gem 'minitest'
+  gem 'minitest', '>= 0.9'
   gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'minitest-great_expectations'
