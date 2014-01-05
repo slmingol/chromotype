@@ -14,7 +14,6 @@ class IpLocation
   end
 
   def self.latitude
-
     latitude_maxmind
   rescue StandardError
     begin
@@ -25,7 +24,9 @@ class IpLocation
   end
 
   def self.northern_hemisphere?
-    l = latitude
-    l ? l.to_f > 0 : nil
+    cached_with_long_ttl('is_northern_hemisphere') do
+      l = latitude
+      l ? l.to_f > 0 : nil
+    end
   end
 end
