@@ -14,4 +14,4 @@ before_script:
   - psql -c 'create database chromotype_test' -U postgres
 
 script:
-  - GEONAMES_USER=chromotype_ci RAILS_ENV=test bundle exec rake --trace test:all
+  - GEONAMES_USER=chromotype_ci RAILS_ENV=test bundle exec rake --trace db:migrate test:all
