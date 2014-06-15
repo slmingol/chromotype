@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '1.9.3' # so ruby-prof works (it doesn't yet with 2.0.0)
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.1.0'
 
 gem 'nokogiri'
 gem 'pg'
