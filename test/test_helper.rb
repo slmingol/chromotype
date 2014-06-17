@@ -1,6 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 
-if ENV['CHROMOTYPE_TEST_HOME'].present?
+if ENV['CHROMOTYPE_TEST_HOME']
   TESTING_HOME = ENV['CHROMOTYPE_TEST_HOME']
 else
   require 'tmpdir'

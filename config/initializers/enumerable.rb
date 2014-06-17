@@ -4,7 +4,7 @@ module Enumerable
   end unless public_method_defined? :to_i
 
   def compact_blanks
-    select { |ea| !ea.blank? }
+    select { |ea| ea.present? }
   end unless public_method_defined? :compact_blanks
 
   def for_each(method_symbol)

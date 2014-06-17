@@ -20,12 +20,12 @@ describe GeoLookup do
     end
     it 'finds Times Square' do
       GeoLookup.new(40.759129, -73.984872).paths.must_equal [
-        ["US", "New York", "New York County", "Manhattan", "Palace Theater"]
+        ["US", "New York", "New York County", "New York City", "Upper East Side", "Palace Theater"]
       ]
     end
     it 'finds Liberty from Staten Island Ferry' do
       GeoLookup.new(40.680413, -74.035675).paths.must_equal [
-        ["US", "New York", "New York County"]
+        ["US", "New York", "New York County", "New York City"]
       ]
     end
     it 'finds Liberty from Liberty Island' do
@@ -49,7 +49,7 @@ describe GeoLookup do
     end
     it 'finds Academy of Sciences' do
       GeoLookup.new(37.770034, -122.466056).paths.must_equal [
-        ["US", "California", "San Francisco County", "San Francisco", "California Academy of Sciences"]
+        ["US", "California", "San Francisco City and County", "San Francisco", "California Academy of Sciences"]
       ]
     end
     it 'finds the Eiffel Tower' do
@@ -69,12 +69,12 @@ describe GeoLookup do
     end
     it 'finds the Lincoln Memorial' do
       GeoLookup.new(38.889390, -77.049223).paths.must_equal [
-        ["US", "District of Columbia", "Washington", "Farragut Square", "Lincoln Memorial"]
+        ["US", "District of Columbia", "Washington", "Southwest Waterfront", "Lincoln Memorial"]
       ]
     end
     it 'finds the Globe Theatre' do
       GeoLookup.new(51.508171, -0.097085).paths.must_equal [
-        ["GB", "England", "London", "London Borough of Southwark", "Borough", "The Globe Theatre"]
+        ["GB", "England", "Greater London", "Borough", "Shakespeares Globe"]
       ]
     end
     it 'finds the other Globe Theatre' do

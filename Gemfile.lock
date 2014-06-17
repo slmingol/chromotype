@@ -234,6 +234,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   json
+  listen
   memcache-client
   micro_magick
   miniskirt

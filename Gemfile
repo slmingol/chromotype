@@ -53,6 +53,7 @@ gem 'bcrypt-ruby'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 gem 'guard' # file alteration monitoring
+gem 'listen'
 gem 'rb-inotify', :require => false
 gem 'rb-fsevent', :require => false
 gem 'rb-fchange', :require => false

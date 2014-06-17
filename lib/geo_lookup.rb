@@ -10,9 +10,14 @@ class GeoLookup
     @lng = lng
   end
 
+  # TODO: geo paths should be stored as tuples of geoname_id:place_name, so when GeoNames changes
+  # names of places, it doesn't orphan the items with the old name
+
   def paths
+    # No one has ever taken a photo at exactly 0, 0.
     return [] if [@lat.to_f, @lng.to_f] == [0, 0]
     paths = [place_path, osm_city_path].compact
+    # Only use the state path if we're desperate:
     paths << state_path if paths.empty?
     self.class.uniq_paths(paths)
   end
@@ -27,7 +32,7 @@ class GeoLookup
 
   def place_path
     with_lat_lng("place") do |lat, lng|
-      # Is there a POI that's < 1/4km away?
+      # Is there a POI that's < 250m away?
       place = GeoNamesAPI::Place.find(lat: lat, lng: lng, radius: 0.25)
       if place
         if osm_city_path
