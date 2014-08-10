@@ -11,7 +11,7 @@ gem 'randumb' #, :git => 'git://github.com/spilliton/randumb.git'
 gem 'json'
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+# gem 'sass-rails'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
@@ -20,7 +20,7 @@ gem 'coffee-rails'
 # gem 'therubyracer', :platform => :ruby
 
 gem 'uglifier'
-gem 'bootstrap-sass'
+# gem 'bootstrap-sass'
 
 gem 'font-awesome-rails'
 #gem 'simple_form'

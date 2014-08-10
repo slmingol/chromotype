@@ -10,6 +10,8 @@ ENV['CHROMOTYPE_HOME'] = TESTING_HOME
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+# This seems to be required for unmarshalling during tests:
+require 'geonames_api/version'
 
 def in_dir(dir)
   cwd = Dir.pwd

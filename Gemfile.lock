@@ -1,7 +1,8 @@
-PATH
-  remote: ../geonames_api
+GIT
+  remote: git://github.com/mceachen/geonames_api.git
+  revision: edd72757351ed423b853ca9806c6ec6a6dd47110
   specs:
-    geonames_api (0.1.5.pre)
+    geonames_api (0.1.4)
       activesupport
       rubyzip
       tzinfo
@@ -129,7 +130,6 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.16)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     nominatim (0.0.5)
@@ -246,7 +246,6 @@ DEPENDENCIES
   minitest-great_expectations
   minitest-reporters
   mocha
-  mysql2
   nokogiri
   nominatim
   parallel
