@@ -27,7 +27,7 @@ class GeoTag < Tag
       exif_asset.lng ||= lng
       exif_asset.save
       geo_tag = for_lat_lng(lat, lng)
-      exif_asset.add_tag(geo_tag) if geo_tag
+      exif_asset.add_tag(geo_tag, self) if geo_tag
     end
   end
 end

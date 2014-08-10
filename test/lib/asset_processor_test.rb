@@ -2,6 +2,7 @@ require "test_helper"
 
 describe "asset processing without image resizing" do
   before :each do
+    Setting.stubs(:northern_hemisphere?) { true }
     ImageResizer.stubs(:visit_asset) # this takes a while, and we aren't testing it here, so skip.
     @ap = AssetProcessor.new
   end

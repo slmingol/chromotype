@@ -67,11 +67,6 @@ describe GeoLookup do
         ["US", "District of Columbia", "Washington", "Southwest Waterfront", "Lincoln Memorial"]
       ]
     end
-    it 'finds the Globe Theatre' do
-      GeoLookup.new(51.508171, -0.097085).paths.must_equal [
-        ["GB", "England", "London", "Borough", "The Globe Theatre"]
-      ]
-    end
     it 'finds the other Globe Theatre' do
       GeoLookup.new(42.196110, -122.715072).paths.must_equal [
         ["US", "Oregon", "Jackson County", "Ashland", "Oregon Shakespeare Festival"]
