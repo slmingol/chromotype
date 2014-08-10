@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.1.0'
 
 gem 'nokogiri'
-gem 'mysql2'
 gem 'pg'
 gem 'foreigner'
 
@@ -12,7 +11,7 @@ gem 'randumb' #, :git => 'git://github.com/spilliton/randumb.git'
 gem 'json'
 
 # Use SCSS for stylesheets
-# gem 'sass-rails'
+gem 'sass-rails'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
@@ -21,7 +20,7 @@ gem 'coffee-rails'
 # gem 'therubyracer', :platform => :ruby
 
 gem 'uglifier'
-#gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
 
 gem 'font-awesome-rails'
 #gem 'simple_form'

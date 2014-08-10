@@ -11,6 +11,23 @@ ENV['CHROMOTYPE_HOME'] = TESTING_HOME
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+def in_dir(dir)
+  cwd = Dir.pwd
+  Dir.chdir(dir)
+  yield
+ensure
+  Dir.chdir(cwd)
+end
+
+if ENV['CI']
+  # We don't need to normally hit the web services to do tests—let's pre-heat the cache:
+  in_dir(Setting.library_root) do
+    # Rebuild by:
+    # cd /var/tmp/chromotype_testing ; tar cvzf ~/code/chromotype/ci/caches.tgz Caches
+    `tar xzf #{Rails.root + "ci/caches.tgz"}`
+  end
+end
+
 require 'minitest/great_expectations'
 require 'minitest/autorun'
 # require 'minitest/reporters'
@@ -43,14 +60,9 @@ def img_path(basename)
 end
 
 def with_tmp_dir(&block)
-  cwd = Dir.pwd
-  Dir.mktmpdir do |dir|
-    Dir.chdir(dir)
-    yield(Pathname.new dir)
-    Dir.chdir(cwd) # jruby needs us to cd out of the tmpdir so it can remove it
+  in_dir(Dir.mktmpdir) do
+    yield(Pathname.pwd)
   end
-ensure
-  Dir.chdir(cwd)
 end
 
 def asset_must_include_all_tags(asset, tags_to_visitor)
