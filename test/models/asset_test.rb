@@ -20,7 +20,7 @@ describe Asset do
   end
 
   it 'sets basename properly' do
-    @asset.reload.basename.must_equal('Gemfile')
+    @asset.reload.name.must_equal('Gemfile')
   end
 
   it 'finds with_filename' do

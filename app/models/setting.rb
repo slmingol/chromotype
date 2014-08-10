@@ -7,6 +7,7 @@ ActiveRecord::Base.with_advisory_lock("chromotype-setting") do
       :is_northern_hemisphere,
       :exclusion_patterns,
       :geonames_username,
+      :nominatim_endpoint,
       :library_root,
       :magick_engine,
       :minimum_image_pixels,
@@ -168,15 +169,14 @@ ActiveRecord::Base.with_advisory_lock("chromotype-setting") do
       end.reverse
     end
 
-    # Used for seasons tagging. This is expensive, so we only do it once
-    # and save it, rather than just setting a default.
-    if get_druther(:is_northern_hemisphere).nil?
-      set_druther(:is_northern_hemisphere, IpLocation.northern_hemisphere? || true)
+    # Used for seasons tagging
+    def self.default_is_northern_hemisphere
+      IpLocation.northern_hemisphere?
     end
 
     # How much parallelism do we allow for sidekiq? Should not exceed number of CPUs.
-    if self.concurrency.to_i <= 0
-      self.concurrency = [Parallel.processor_count - 1, 1].max # at least 1
+    def self.default_concurrency
+      [Parallel.processor_count - 1, 1].max # at least 1
     end
 
     def self.secret_token

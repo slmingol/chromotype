@@ -114,7 +114,7 @@ CREATE TABLE assets (
     type character varying(255),
     favorite boolean,
     hidden boolean,
-    basename character varying(255),
+    name character varying(255),
     caption character varying(255),
     description character varying(255),
     taken_at timestamp without time zone,
@@ -208,6 +208,7 @@ CREATE TABLE tags (
     parent_id integer,
     name character varying(255),
     description character varying(255),
+    pk integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -385,6 +386,22 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: asset_tags_asset_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY asset_tags
+    ADD CONSTRAINT asset_tags_asset_id_fk FOREIGN KEY (asset_id) REFERENCES assets(id);
+
+
+--
+-- Name: asset_tags_tag_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY asset_tags
+    ADD CONSTRAINT asset_tags_tag_id_fk FOREIGN KEY (tag_id) REFERENCES tags(id);
+
+
+--
 -- Name: asset_urls_asset_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -441,3 +458,4 @@ INSERT INTO schema_migrations (version) VALUES ('20110526005214');
 INSERT INTO schema_migrations (version) VALUES ('20120103032104');
 
 INSERT INTO schema_migrations (version) VALUES ('20121128020835');
+

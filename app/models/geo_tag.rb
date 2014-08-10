@@ -5,8 +5,20 @@ class GeoTag < Tag
     'where'
   end
 
+  def self.for_lat_lng(lat, lng)
+    geo = GeoLookup.new(lat, lng)
+    if geo.place_id
+      where(pk: geo.place_id).first || begin
+        attrs = geo.path.map { |ea| {name: ea} }
+        attrs.last[:pk] = geo.place_id
+        named_root.find_or_create_by_path(attrs)
+      end
+    end
+  end
+
   def self.visit_asset(exif_asset)
-    # todo: short-circuit if we already have geo tags
+    # short-circuit if we already have lat and lng.
+    return if exif_asset.lat || exif_asset.lng || NetworkStatus.down?
     e = exif_asset.exif
     lat = e[:gps_latitude]
     lng = e[:gps_longitude]
@@ -14,10 +26,8 @@ class GeoTag < Tag
       exif_asset.lat ||= lat
       exif_asset.lng ||= lng
       exif_asset.save
-    end
-    GeoLookup.new(lat, lng).paths.each do |ea|
-      tag = named_root.find_or_create_by_path(ea)
-      exif_asset.add_tag(tag, self)
+      geo_tag = for_lat_lng(lat, lng)
+      exif_asset.add_tag(geo_tag) if geo_tag
     end
   end
 end

@@ -67,7 +67,7 @@ class Asset < ActiveRecord::Base
 
   def self.create_with_pathname(pathname)
     pathname = pathname.to_pathname
-    create(:basename => pathname.basename.to_s).
+    create(name: pathname.basename.to_s).
       tap { |ea| ea.add_pathname(pathname) }
   end
 
@@ -157,7 +157,7 @@ class Asset < ActiveRecord::Base
   end
 
   def mv_to(basedir)
-    dest = basedir + ymd_dirs + pathname.basename
+    dest = basedir + ymd_dirs + pathname.name
     FileUtils.mv(pathname, dest)
   end
 end

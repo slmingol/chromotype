@@ -89,7 +89,7 @@ class ProtoAsset
 
       @asset_state = asset.nil? ? :new : :adopted
 
-      asset ||= ExifAsset.create!(:basename => pathname.basename.to_s)
+      asset ||= ExifAsset.create!(name: pathname.basename.to_s)
       asset.asset_urls << asset_url
       asset_url.asset_urns.delete_all # Prior URNs lose.
       @urners.each do |urner|

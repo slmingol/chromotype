@@ -5,6 +5,7 @@ class CreateTags < ActiveRecord::Migration
       t.integer :parent_id
       t.string :name, :required => true
       t.string :description
+      t.integer :pk # <- this is tag-implementation specific. See GeoTag.
       t.timestamps
     end
 

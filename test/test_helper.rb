@@ -13,11 +13,10 @@ require 'rails/test_help'
 
 require 'minitest/great_expectations'
 require 'minitest/autorun'
-require 'minitest/reporters'
-MiniTest::Reporters.use! unless ENV['CI']
-require 'sidekiq/testing'
+# require 'minitest/reporters'
+# Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-# Uncomment if you want Capybara in acceptance/integration tests
+require 'sidekiq/testing'
 # require "minitest/rails/capybara"
 
 if ENV['CHROMOTYPE_TEST_HOME'].blank?

@@ -3,6 +3,10 @@ require 'net/http'
 class NetworkStatus
   extend CacheSupport
 
+  def self.down?
+    !up?
+  end
+
   def self.up?
     cached_with_short_ttl(:up?) do
       %w[google.com icann.org mozilla.org twitter.com w3.org].shuffle.any? { |h| site_up?(h) }

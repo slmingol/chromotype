@@ -7,5 +7,7 @@ class CreateAssetsTags < ActiveRecord::Migration
       t.timestamps
     end
     add_index :asset_tags, [:tag_id, :asset_id], unique: true
+    add_foreign_key(:asset_tags, :assets)
+    add_foreign_key(:asset_tags, :tags)
   end
 end

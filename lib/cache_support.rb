@@ -14,6 +14,11 @@ module CacheSupport
     )
   end
 
+  def clear_cache!
+    @short_ttl_cache.clear if @short_ttl_cache
+    @long_ttl_cache.clear if @long_ttl_cache
+  end
+
   def long_ttl_cache
     @long_ttl_cache ||= ActiveSupport::Cache::FileStore.new(
       Setting.cache_root,
@@ -23,10 +28,10 @@ module CacheSupport
 
   # Works whether include'd or extend'ed:
   def class_name
-   self.class == Class ? self.name : self.class.name
+    self.class == Class ? self.name : self.class.name
   end
 
   def cache_key(key)
-    "#{class_name}-#{key}"
+    "#{class_name}_#{key}"
   end
 end

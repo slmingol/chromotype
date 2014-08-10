@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3' # so ruby-prof works (it doesn't yet with 2.0.0)
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.1.0'
 
 gem 'nokogiri'
+gem 'mysql2'
 gem 'pg'
 gem 'foreigner'
 
@@ -13,7 +12,7 @@ gem 'randumb' #, :git => 'git://github.com/spilliton/randumb.git'
 gem 'json'
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+# gem 'sass-rails'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
@@ -60,11 +59,10 @@ gem 'rb-fchange', :require => false
 
 #gem 'haml-rails'
 gem 'parallel' # just for Parallel.processor_count
-gem 'geonames_api' #, :path => '../geonames_api' # :github => 'mceachen/geonames_api'
+gem 'geonames_api', :path => '../geonames_api'
 gem 'nominatim'
 gem 'findler'
 gem 'closure_tree'
-gem 'exiftool'
 gem 'exiftool_vendored'
 gem 'micro_magick'
 gem 'dimensions'
@@ -76,9 +74,12 @@ gem 'foreman'
 gem 'druthers'
 
 group :development do
-  gem 'spring'
-# TODO: seemed cool:  gem "rails-erd"
-#  gem 'debugger'
+  # TODO: seemed cool:  gem "rails-erd"
+  # For ruby 1.9:
+  # gem 'debugger-ruby_core_source'
+  # gem 'debugger'
+  # For ruby 2.x:
+  gem 'byebug'
 end
 
 group :test do

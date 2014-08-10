@@ -18,11 +18,6 @@ describe GeoLookup do
         ["US", "California", "Marin County", "Discovery Museum"]
       ]
     end
-    it 'finds Times Square' do
-      GeoLookup.new(40.759129, -73.984872).paths.must_equal [
-        ["US", "New York", "New York County", "New York City", "Upper East Side", "Palace Theater"]
-      ]
-    end
     it 'finds Liberty from Staten Island Ferry' do
       GeoLookup.new(40.680413, -74.035675).paths.must_equal [
         ["US", "New York", "New York County", "New York City"]
@@ -38,13 +33,13 @@ describe GeoLookup do
     end
     it 'finds Santa Barbara Mission' do
       GeoLookup.new(34.438130, -119.713004).paths.must_equal [
-        ["US", "California", "Santa Barbara County", "Santa Barbara", "Mission Santa Barbara"]
+        ["US", "California", "Santa Barbara", "Santa Barbara", "Mission Santa Barbara"]
       ]
     end
     it 'finds Isla Vista' do
       # I would have also accepted Isla Vista.
       GeoLookup.new(34.411753, -119.859759).paths.must_equal [
-        ["US", "California", "Santa Barbara County", "Santa Barbara", "Trigo-Pasado Park"]
+        ["US", "California", "Santa Barbara", "Santa Barbara", "Trigo-Pasado Park"]
       ]
     end
     it 'finds Academy of Sciences' do
@@ -74,7 +69,7 @@ describe GeoLookup do
     end
     it 'finds the Globe Theatre' do
       GeoLookup.new(51.508171, -0.097085).paths.must_equal [
-        ["GB", "England", "Greater London", "Borough", "Shakespeares Globe"]
+        ["GB", "England", "London", "Borough", "The Globe Theatre"]
       ]
     end
     it 'finds the other Globe Theatre' do
@@ -82,7 +77,11 @@ describe GeoLookup do
         ["US", "Oregon", "Jackson County", "Ashland", "Oregon Shakespeare Festival"]
       ]
     end
-
+    it 'finds Mavericks' do
+      GeoLookup.new(37.494104, -122.500416).paths.must_equal [
+        ["US", "California", "San Mateo County", "Sail Rock"]
+      ]
+    end
   end
 
   describe ".uniq_paths" do
@@ -91,4 +90,4 @@ describe GeoLookup do
       GeoLookup.uniq_paths(input).must_equal_contents [[:a, :b, :c, :d], [:e, :f, :g], [:f]]
     end
   end
-end
+end if NetworkStatus.up?

@@ -35,7 +35,7 @@ class AssetUrl < ActiveRecord::Base
     @pathname ||= to_uri.to_pathname
   end
 
-  def basename
+  def name
     pathname.basename.to_s
   end
 
@@ -61,8 +61,8 @@ class AssetUrl < ActiveRecord::Base
   end
 
   def update_asset_basename
-    if asset && asset.basename.nil?
-      asset.update_attribute(:basename, basename)
+    if asset && asset.name.nil?
+      asset.update_attribute(:name, name)
     end
   end
 end

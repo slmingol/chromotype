@@ -4,7 +4,7 @@ class CreateAssets < ActiveRecord::Migration
       t.string :type
       t.boolean :favorite
       t.boolean :hidden
-      t.string :basename
+      t.string :name
       t.string :caption
       t.string :description
       t.timestamp :taken_at
@@ -15,6 +15,7 @@ class CreateAssets < ActiveRecord::Migration
       t.timestamps
     end
 
-    # TODO: we may want an index to show not-lost assets, and not-lost, favorite assets
+    # TODO: we will want an index to show not-lost assets, and not-lost, favorite assets
+
   end
 end
