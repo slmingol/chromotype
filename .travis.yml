@@ -5,8 +5,8 @@ rvm:
 
 env:
 #  - DB=sqlite
-  - DB=mysql
-#  - DB=postgresql
+#  - DB=mysql
+  - DB=postgresql
 
 before_script:
   - sudo apt-get install graphicsmagick
